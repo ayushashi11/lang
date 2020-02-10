@@ -1,22 +1,25 @@
-//use std::boxed::Box;
-use std::borrow::Borrow;
-#[derive(Clone)]
+//use std::boxed::Box
+#[derive(Clone,Debug)]
 pub enum DataType{
     Integer(i32),
     Number(f64),
     String(String),
     Complex(f64,f64),
     Boolean(bool),
-    Pointer(String,Box<DataType>),
+    Error(String),
     Null
 }
 #[derive(Clone)]
 pub enum Expr{
+    IdentExpr(String),
     DataExpr(DataType),
     AssingmentExpr(String,Box<Expr>),
     InputExpr(Box<Expr>)
 }
 #[derive(Clone)]
 pub enum Stmt{
-    PrintStmt(Expr)
+    ExprStmt(Expr),
+    PrintStmt(Expr),
+    BlockStmt(Block)
 }
+pub type Block=Vec<Stmt>;

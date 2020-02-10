@@ -1,8 +1,10 @@
+#[derive(Clone)]
 struct Node<T>{
     dat:T,
     next:Link<T>
 }
 type Link<T> = Option<Box<Node<T>>>;
+#[derive(Clone)]
 pub struct LList<T>{
     head:Link<T>
 }
@@ -13,9 +15,15 @@ impl<T> LList<T>{
     pub fn push(&mut self, elem:T){
         let new_node = Box::new(Node{
             dat:elem,
-            next:self.head.take()
+            next:None
         });
-        self.head = Some(new_node);
+        let mut curr=self.head;
+        loop{
+            match curr{
+                Some(node)=>curr=&**node.next,
+                
+            }
+        }
     }
     pub fn pop(&mut self) -> Option<T>{
         self.head.take().map(|node| {
@@ -27,6 +35,7 @@ impl<T> LList<T>{
         Iter{next: self.head.as_ref().map(|node| &**node)}
     }
 }
+#[derive(Clone)]
 pub struct Iter<'a,T>{
     next: Option<&'a Node<T>>
 }
